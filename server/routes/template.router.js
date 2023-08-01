@@ -57,6 +57,7 @@ router.post('/', (req, res) => {
 //Delete Route
 router.delete('/:id', (req, res) => {
   let idToDelete = req.params.id
+  console.log('ID to delete is :', idToDelete);
   //query text to delete a strain by id and protect against sql injection 
   let queryText = `DELETE FROM "strain" WHERE id = $1;`
   //bringing in the pool 
@@ -71,5 +72,8 @@ router.delete('/:id', (req, res) => {
     })
 
 })
+
+
+
 
 module.exports = router;
