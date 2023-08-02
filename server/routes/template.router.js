@@ -1,11 +1,10 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const { rejectUnauthenticated } = require('../modules/authentication-middleware')
 
-/**
- * GET route template
- */
-router.get('/', (req, res) => {
+//Get Route
+router.get('/', rejectUnauthenticated, (req, res) => {
   // GET route code 
   console.log('inside of /Euphoria GET router side');
   let queryText =
@@ -32,7 +31,7 @@ GROUP BY "strain"."strain_name", "strain"."image", "strain"."description";`
 });
 
 //Post Route
-router.post('/', (req, res) => {
+router.post('/',rejectUnauthenticated, (req, res) => {
   // POST route code here
   console.log('inside of Euphoria post for notes', req.body);
   let description_notes = req.body.description_notes
@@ -55,7 +54,7 @@ router.post('/', (req, res) => {
 });
 
 //Delete Route
-router.delete('/:id', (req, res) => {
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
   //replace id with req.params when you start your client side delete
   let idToDelete = 1
   console.log('ID to delete is :', idToDelete);
@@ -75,7 +74,7 @@ router.delete('/:id', (req, res) => {
 })
 
 //Put Route 
-router.put('/:id', (req, res) => {
+router.put('/:id', rejectUnauthenticated, (req, res) => {
   let userId = req.params.userId
   let strainId = req.params.strainId
   let updatedLikeStatus = req.body.like
