@@ -56,7 +56,8 @@ router.post('/', (req, res) => {
 
 //Delete Route
 router.delete('/:id', (req, res) => {
-  let idToDelete = req.params.id
+  //replace id with req.params when you start your client side delete
+  let idToDelete = 1
   console.log('ID to delete is :', idToDelete);
   //query text to delete a strain by id and protect against sql injection 
   let queryText = `DELETE FROM "strain" WHERE id = $1;`
@@ -73,7 +74,25 @@ router.delete('/:id', (req, res) => {
 
 })
 
-
+//Put Route 
+router.put('/:id', (req, res) => {
+  let userId = req.params.userId
+  let strainId = req.params.strainId
+  let updatedLikeStatus = req.body.like
+  //query text to update strains like status and sql injection 
+  let queryText = `UPDATE favorites SET like_status = $1 WHERE user_id = $2 AND strain_id = $3`;
+  const queryValues = [updatedLikeStatus, userId, strainId];
+  //bringing in pool 
+  pool.query(queryText, queryValues)
+    .then(() => {
+      console.log('inside of put request updated like status is:', req.body);
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.error('Error updating favorite:', error);
+      res.sendStatus(500);
+    });
+});
 
 
 module.exports = router;
