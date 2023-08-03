@@ -1,5 +1,5 @@
 //used to store strains returned from the server 
-const euphoriaReducer = (state = [], action) => {
+const strains = (state = [], action) => {
     switch (action.type){
         case "SET_STRAINS":
             return action.payload
@@ -8,4 +8,4 @@ const euphoriaReducer = (state = [], action) => {
     }
 }
 
-export default euphoriaReducer;
+export default strains;
