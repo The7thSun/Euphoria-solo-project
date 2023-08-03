@@ -10,11 +10,6 @@ function StrainList() {
   //bringing in usedispatch
  const dispatch = useDispatch();
 
- //dispatching an action to fecth strains to grab my data 
-  useEffect(() => {
-    dispatch({ type: 'FETCH_STRAINS' });
-  }, [dispatch]);
-
   // rendering user reducer info to the DOM
   const user = useSelector((store) => store.user);
 
@@ -23,13 +18,22 @@ function StrainList() {
 
   //console log to see if the data gets to this point 
   console.log('inside of strains', strains);
+
+ //dispatching an action to fecth strains to grab my data 
+ useEffect(() => {
+  dispatch({ type: 'FETCH_STRAINS' });
+}, []);
   
   //render
   return (
     <>
-    <div className="container">
-      <h1>Welcome, {user.username}!</h1>
-      <h2>{strains.strain_name}</h2>
+    <div>
+      <h1>Welcome to Euphoria, {user.username}!</h1>
+      <section>
+        {strains.map((strain) => {
+          return
+        })}
+      </section>
       <LogOutButton className="btn" />
     </div>
     </>
