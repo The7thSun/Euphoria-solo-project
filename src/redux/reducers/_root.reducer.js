@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
   strains,//contains strain information 
-  likeReducer//storing the likes od strains 
+  likeReducer//storing the likes of strains 
 });
 
 export default rootReducer;

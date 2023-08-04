@@ -19,6 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import StrainDetails from '../StrainDetails/StrainDetails'
 
 import './App.css';
 
@@ -59,6 +60,13 @@ function App() {
           >
             <StrainList />
           </ProtectedRoute>
+          
+           {/* Details page */}
+        <Route 
+         //brings you to details page 
+        path='/details'>
+          <StrainDetails />
+        </Route>
 
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage

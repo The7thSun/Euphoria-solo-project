@@ -50,8 +50,9 @@ function* deleteStrains(action){
 //liking/ updating strains gen function 
 function* likeStrains(action){
     try{
-       const response = yield axios.put(`/Euphoria/${action.payload.id}`)
-       yield put ({ type: "LIKE_STRAINS", payload: response.data})
+       const response = yield axios.put(`/Euphoria/${action.payload}`)
+       //refreshing data with get 
+       yield put ({ type: "FETCH_STRAINS", payload: response.data})
     } catch (err){
         console.log('error liking strains on redux side', err);
     }
