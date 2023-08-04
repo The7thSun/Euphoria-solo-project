@@ -3,6 +3,7 @@ import React, {useEffect} from 'react';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import {useSelector} from 'react-redux';
 import { useDispatch } from 'react-redux';
+import StrainItem from '../StrainItem/StrainItem';
 
 //strainsList function 
 function StrainList() {
@@ -31,7 +32,7 @@ function StrainList() {
       <h1>Welcome to Euphoria, {user.username}!</h1>
       <section>
         {strains.map((strain) => {
-          return
+          return <StrainItem key={strain.id} strain={strain}/>
         })}
       </section>
       <LogOutButton className="btn" />
