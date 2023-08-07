@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import StrainDetails from '../StrainDetails/StrainDetails'
+import StrainFavorites from '../StrainFavorites/StrainFavorites';
 
 import './App.css';
 
@@ -66,6 +67,13 @@ function App() {
          //brings you to details page 
         path='/details'>
           <StrainDetails />
+        </Route>
+           
+            {/* favorites page */}
+            <Route 
+         //brings you to details page 
+        path='/favorites'>
+          <StrainFavorites />
         </Route>
 
           <ProtectedRoute

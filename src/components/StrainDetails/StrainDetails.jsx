@@ -1,11 +1,15 @@
 //imports 
 import { useSelector, useDispatch } from "react-redux"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 //strain Details function
 function StrainDetails({}){
 
     //bringing in use dispatch
     const dispatch = useDispatch()
+
+    //bringing in use history 
+    const history = useHistory()
 
     //bringing in use selector to grab from strains reducer 
     const strains = useSelector((store) => store.strains)
@@ -16,9 +20,14 @@ function StrainDetails({}){
             console.log('id is ', id);
             dispatch({
                 type: "LIKE_STRAINS",
-                payload: id
+                payload: [strains]
             })
         }
+
+    //favorites route handler 
+    const favRouteHandler = () => {
+        history.push("/favorites")
+    }
        
     //render
     return(
@@ -27,6 +36,7 @@ function StrainDetails({}){
                 <h1>{strains.strain_name}</h1>
                 <div>
                     <button onClick={() => handleStrainLikes(strains.id)}>❤️</button>
+                    <button onClick={favRouteHandler}>Go to Favorites</button>
                     <img src={strains.image} />
                 </div>
                 <p>{strains.description}</p>

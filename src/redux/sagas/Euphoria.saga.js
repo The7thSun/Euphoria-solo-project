@@ -7,6 +7,7 @@ function* euphoriaSaga() {
     yield takeLatest("ADD_NOTES", addNotes)
     yield takeLatest("DELETE_STRAINS", deleteStrains)
     yield takeLatest("LIKE_STRAINS", likeStrains)
+    yield takeLatest("FETCH_FAVORITE_STRAINS", fetchFavoriteStrains)
 }
 
 //fetch strains GET gen function
@@ -20,6 +21,18 @@ function* fetchStrains(action) {
         console.log('error in fetching strains', err);
     }
 }
+
+//fetch strains GET gen function for favorites
+function* fetchFavoriteStrains(action) {
+    // console.log('fetch strains was dispatched with', action);
+     try {
+         const response = yield axios.get('/favorites')
+         console.log('response data is :', response.data);
+         yield put({ type: "SET_LIKE_STRAINS", payload: response.data })
+     } catch (err) {
+         console.log('error in fetching favorite strains', err);
+     }
+ }
 
 //add notes POST gen function 
 function* addNotes(action) {
@@ -52,7 +65,8 @@ function* likeStrains(action){
     try{
        const response = yield axios.put(`/Euphoria/${action.payload}`)
        //refreshing data with get 
-       yield put ({ type: "FETCH_STRAINS", payload: response.data})
+       yield put ({ type: "FETCH_FAVORITE_STRAINS", payload: response.data})
+       console.log('response.data is:', response.data);
     } catch (err){
         console.log('error liking strains on redux side', err);
     }

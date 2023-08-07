@@ -32,10 +32,14 @@ GROUP BY "strain"."strain_name", "strain"."image", "strain"."description","strai
 });
 
 //get route for user id 
-router.get('/favorites', rejectUnauthenticated, (req, res) => {
+router.get('/favorites', (req, res) => {
   // GET route code 
-  console.log('inside of /Euphoria GET router side');
+  console.log('inside of /favorites GET router side');
   let userId = req.user.id
+  if (!req.user) {
+    console.log('req.user is undefined');
+    return res.sendStatus(401);
+  }
   let queryText =
     `SELECT 
     "strain"."id",
