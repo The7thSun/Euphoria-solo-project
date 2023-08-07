@@ -66,7 +66,7 @@ function App() {
            {/* Details page */}
         <Route 
          //brings you to details page 
-        path='/details'>
+        path='/details/:id'>
           <StrainDetails />
         </Route>
 

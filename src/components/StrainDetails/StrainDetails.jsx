@@ -1,6 +1,6 @@
 //imports 
 import { useSelector, useDispatch } from "react-redux"
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 //strain Details function
 function StrainDetails({}){
@@ -15,12 +15,22 @@ function StrainDetails({}){
     const strains = useSelector((store) => store.strains)
     console.log('strains data', strains);
 
+    //dynamic routes for scpecific strain click 
+    const params = useParams()
+    console.log('params is :', params);
+
+    //grabbing the single id so that the data isnt lost on like
+    const strain = strains.find( strain =>
+     strain.id == params.id
+     )
+     console.log('strain is :', strain);
+
     //handler for liking strains button
         const handleStrainLikes = (id) =>{
             console.log('id is ', id);
             dispatch({
                 type: "LIKE_STRAINS",
-                payload: [strains]
+                payload: strain.id
             })
         }
 
@@ -33,15 +43,15 @@ function StrainDetails({}){
     return(
         <>
             <div>
-                <h1>{strains.strain_name}</h1>
+                <h1>{strain.strain_name}</h1>
                 <div>
-                    <button onClick={() => handleStrainLikes(strains.id)}>❤️</button>
+                    <button onClick={() => handleStrainLikes(strain.id)}>❤️</button>
                     <button onClick={favRouteHandler}>Go to Favorites</button>
-                    <img src={strains.image} />
+                    <img src={strain.image} />
                 </div>
-                <p>{strains.description}</p>
-                <p>positive feelings: {strains.positive_feelings}</p>
-                <p>negative feelings: {strains.negative_feelings}</p>
+                <p>{strain.description}</p>
+                <p>positive feelings: {strain.positive_feelings}</p>
+                <p>negative feelings: {strain.negative_feelings}</p>
             </div>
         </>
     )

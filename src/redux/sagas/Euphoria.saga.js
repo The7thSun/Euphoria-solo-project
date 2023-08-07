@@ -12,7 +12,7 @@ function* euphoriaSaga() {
 
 //fetch strains GET gen function
 function* fetchStrains(action) {
-   // console.log('fetch strains was dispatched with', action);
+    console.log('fetch strains was dispatched with', action);
     try {
         const response = yield axios.get('/Euphoria')
         console.log('response data is :', response.data);
@@ -26,7 +26,7 @@ function* fetchStrains(action) {
 function* fetchFavoriteStrains(action) {
     // console.log('fetch strains was dispatched with', action);
      try {
-         const response = yield axios.get('/favorites')
+         const response = yield axios.get('/Euphoria/favorites')
          console.log('response data is :', response.data);
          yield put({ type: "SET_LIKE_STRAINS", payload: response.data })
      } catch (err) {
@@ -63,7 +63,7 @@ function* deleteStrains(action){
 //liking/ updating strains gen function 
 function* likeStrains(action){
     try{
-       const response = yield axios.put(`/Euphoria/${action.payload}`)
+       const response = yield axios.post(`/Euphoria/${action.payload}`, {like: true})
        //refreshing data with get 
        yield put ({ type: "FETCH_FAVORITE_STRAINS", payload: response.data})
        console.log('response.data is:', response.data);

@@ -108,17 +108,18 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
 })
 
 //Put Route 
-router.put('/:id', rejectUnauthenticated, (req, res) => {
-  let userId = req.user.id
-  let strainId = req.params.strainId
-  let updatedLikeStatus = req.body.like
+router.post('/:id', rejectUnauthenticated, (req, res) => {
+  let user_id = req.user.id
+  let strain_id = req.params.id
+  let like_status = req.body.like
   //query text to update strains like status and sql injection 
-  let queryText = `UPDATE "favorites" SET "like_status" = TRUE WHERE "user_id" = \$1 AND "strain_id" = \$2 AND "like_status" = \$3;`;
-  const queryValues = [updatedLikeStatus, userId, strainId];
+  let queryText = `INSERT INTO "favorites" (user_id, strain_id, like_status)
+  VALUES($1, $2, $3)`
+  const queryValues = [user_id, strain_id, like_status  ];
   //bringing in pool 
   pool.query(queryText, queryValues)
     .then(() => {
-      console.log('inside of put request updated like status is:', req.body);
+      console.log('inside of post request updated like status is:', req.body);
       res.sendStatus(200);
     })
     .catch((error) => {

@@ -1,5 +1,5 @@
 //imports
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
 
 //StrainFavorites function
@@ -9,6 +9,10 @@ function StrainFavorites() {
 
   //bringing in useDisptch
   const dispatch = useDispatch();
+
+  //bringing in use params 
+  const params = useParams()
+  console.log('params is :', params);
 
   //bringing in use selector and pulling from strains/user/liked starin stores
   const userId = useSelector((store) => store.user);
@@ -27,12 +31,17 @@ function StrainFavorites() {
     strainEditRoute();
   };
 
+  //grabbing the single id so that the delete can have the id it needs
+  const strain = likedStrains.find( strain =>
+    strain.id == params.id
+    )
+
   //dispatch to the delete reducer
   const handleStrainDelete = (id) => {
     console.log("id is:", id);
     dispatch({
       type: "DELETE_STRAINS",
-      payload: id,
+      payload: strain.id,
     });
   };
 

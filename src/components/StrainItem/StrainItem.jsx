@@ -12,16 +12,12 @@ function StrainItem({ strain }) {
 
   //setting use history to go to details when img is clicked
   const detailsRoute = () => {
-    history.push("/details");
+    history.push(`/details/${strain.id}`);
   };
 
   //handler for img click that goes to redux for dynamic handle
   const handleStrainItems = (event) => {
     event.preventDefault();
-    dispatch({
-      type: "SET_STRAINS",
-      payload: strain,
-    });
     detailsRoute();
   };
 
