@@ -36,10 +36,6 @@ router.get('/favorites', (req, res) => {
   // GET route code 
   console.log('inside of /favorites GET router side');
   let userId = req.user.id
-  if (!req.user) {
-    console.log('req.user is undefined');
-    return res.sendStatus(401);
-  }
   let queryText =
     `SELECT 
     "strain"."id",

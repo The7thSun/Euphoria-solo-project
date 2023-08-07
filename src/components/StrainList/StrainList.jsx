@@ -16,6 +16,7 @@ function StrainList() {
 
   //rendering strain list info to the DOM 
   const strains = useSelector((store) => store.strains)
+  
 
   //console log to see if the data gets to this point 
   console.log('inside of strains', strains);

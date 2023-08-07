@@ -15,7 +15,7 @@ function StrainDetails({}){
     const strains = useSelector((store) => store.strains)
     console.log('strains data', strains);
 
-    //hanadler for liking strains button
+    //handler for liking strains button
         const handleStrainLikes = (id) =>{
             console.log('id is ', id);
             dispatch({

@@ -21,6 +21,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import StrainDetails from '../StrainDetails/StrainDetails'
 import StrainFavorites from '../StrainFavorites/StrainFavorites';
+import StrainEdit from '../StrainEdit./StrainEdit';
 
 import './App.css';
 
@@ -68,10 +69,17 @@ function App() {
         path='/details'>
           <StrainDetails />
         </Route>
+
+           {/* Edit page */}
+           <Route 
+         //brings you to edit page 
+        path='/edit'>
+          <StrainEdit />
+        </Route>
            
             {/* favorites page */}
             <Route 
-         //brings you to details page 
+         //brings you to favorites page 
         path='/favorites'>
           <StrainFavorites />
         </Route>
