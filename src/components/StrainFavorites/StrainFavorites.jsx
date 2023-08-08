@@ -1,6 +1,7 @@
 //imports
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
+import React, {useEffect} from 'react';
 
 //StrainFavorites function
 function StrainFavorites() {
@@ -26,24 +27,38 @@ function StrainFavorites() {
   const strainEditRoute = () => {
     history.push("/edit");
   };
-  //handle click for the image routing to edit
+  //handle click for the image routing to edit STILL NEEDS TO BE DONE 
   const handleImgClick = () => {
     strainEditRoute();
   };
 
   //grabbing the single id so that the delete can have the id it needs
-  const strain = likedStrains.find( strain =>
+  /*const strain = likedStrains.find( strain =>
     strain.id == params.id
-    )
+    )*/
+ 
 
   //dispatch to the delete reducer
-  const handleStrainDelete = (id) => {
+  const handleStrainIdDelete = (id) => {
     console.log("id is:", id);
     dispatch({
-      type: "DELETE_STRAINS",
-      payload: strain.id,
+      type: "DELETE_STRAINS_ID",
+      payload: id,
     });
   };
+
+//dispatching an action to fecth strains to grab my data 
+useEffect(() => {
+    dispatch({ type: "FETCH_FAVORITE_STRAINS" });
+  }, []);
+
+ /* const handleStrainImgDelete = (imageId) => {
+    console.log('img is :', imageId);
+       dispatch({
+        type: "DELETE_STRAINS_IMG",
+        payload: imageId
+       })
+  }*/
 
   //render
   return (
@@ -52,7 +67,7 @@ function StrainFavorites() {
       {likedStrains.map((strain) => (
         <div key={strain.id}>
           <h1>{strain.strain_name}</h1>
-          <button onClick={() => handleStrainDelete(strain.image.id)}>❌</button>
+          <button onClick={() => handleStrainIdDelete(strain.id, strain.image)}>❌</button>
           <img src={strain.image} onClick={handleImgClick} />
         </div>
       ))}

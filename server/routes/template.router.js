@@ -61,8 +61,8 @@ GROUP BY "strain"."strain_name", "strain"."image", "strain"."description", "stra
     })
 });
 
-//Post Route
-router.post('/',rejectUnauthenticated, (req, res) => {
+//Put Route //TODO
+router.put('/',rejectUnauthenticated, (req, res) => {
   // POST route code here
   console.log('inside of Euphoria post for notes', req.body);
   let userId = req.user.id
@@ -90,10 +90,10 @@ router.post('/',rejectUnauthenticated, (req, res) => {
 //Delete Route
 router.delete('/:id', rejectUnauthenticated, (req, res) => {
   //replace id with req.params when you start your client side delete
-  let idToDelete = 1
+  let idToDelete = req.params.id
   console.log('ID to delete is :', idToDelete);
   //query text to delete a strain by id and protect against sql injection 
-  let queryText = `DELETE FROM "strain" WHERE id = $1;`
+  let queryText = `DELETE FROM "favorites" WHERE "strain_id" = $1;`
   //bringing in the pool 
   pool.query(queryText, [idToDelete])
     .then((result) => {

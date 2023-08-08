@@ -5,9 +5,10 @@ import { put, takeLatest } from "redux-saga/effects"
 function* euphoriaSaga() {
     yield takeLatest("FETCH_STRAINS", fetchStrains)
     yield takeLatest("ADD_NOTES", addNotes)
-    yield takeLatest("DELETE_STRAINS", deleteStrains)
+    yield takeLatest("DELETE_STRAINS_ID", deleteStrainsId)
     yield takeLatest("LIKE_STRAINS", likeStrains)
     yield takeLatest("FETCH_FAVORITE_STRAINS", fetchFavoriteStrains)
+   // yield takeLatest("DELETE_STRAINS_IMG", deleteStrainsImg )
 }
 
 //fetch strains GET gen function
@@ -48,17 +49,29 @@ function* addNotes(action) {
     }
 }
 
-//Delete strains delete gen function
-function* deleteStrains(action){
+//Delete strains delete id gen function
+function* deleteStrainsId(action){
     console.log('delete strain was dispatched with:', action);
     try{
         yield axios.delete(`/Euphoria/${action.payload}`)
         //refreshing data with fetch/get
         yield put({ type: 'FETCH_STRAINS'})
     } catch(err){
-        console.log('error deleting strains onn redux side', err);
+        console.log('error deleting strains id on redux side', err);
     }
 }
+
+//Delete strains delete img gen function
+/*function* deleteStrainsImg(action){
+    console.log('delete strain was dispatched with:', action);
+    try{
+        yield axios.delete(`/Euphoria/${action.payload}`)
+        //refreshing data with fetch/get
+        yield put({ type: 'FETCH_STRAINS'})
+    } catch(err){
+        console.log('error deleting strains img on redux side', err);
+    }
+}*/
 
 //liking/ updating strains gen function 
 function* likeStrains(action){
