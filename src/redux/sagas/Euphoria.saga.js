@@ -55,7 +55,7 @@ function* deleteStrainsId(action){
     try{
         yield axios.delete(`/Euphoria/${action.payload}`)
         //refreshing data with fetch/get
-        yield put({ type: 'FETCH_STRAINS'})
+        yield put({ type: "FETCH_FAVORITE_STRAINS"})
     } catch(err){
         console.log('error deleting strains id on redux side', err);
     }

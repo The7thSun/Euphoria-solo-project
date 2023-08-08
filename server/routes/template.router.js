@@ -61,8 +61,8 @@ GROUP BY "strain"."strain_name", "strain"."image", "strain"."description", "stra
     })
 });
 
-//Put Route //TODO
-router.put('/',rejectUnauthenticated, (req, res) => {
+//Put Route 
+router.put('/:id',rejectUnauthenticated, (req, res) => {
   // POST route code here
   console.log('inside of Euphoria post for notes', req.body);
   let userId = req.user.id
@@ -107,7 +107,7 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
 
 })
 
-//Put Route 
+//Post Route 
 router.post('/:id', rejectUnauthenticated, (req, res) => {
   let user_id = req.user.id
   let strain_id = req.params.id
