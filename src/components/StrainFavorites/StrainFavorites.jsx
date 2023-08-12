@@ -1,44 +1,43 @@
-//imports
-import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
+import Chip from '@mui/material/Chip';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
-//StrainFavorites function
+// StrainFavorites function
 function StrainFavorites() {
-  //bringing in use history
+  // bringing in use history
   const history = useHistory();
 
-  //bringing in useDisptch
+  // bringing in useDisptch
   const dispatch = useDispatch();
 
-  //bringing in use params 
-  const params = useParams()
-  console.log('params is :', params);
-
-  //bringing in use selector and pulling from strains/user/liked starin stores
+  // bringing in use selector and pulling from strains/user/liked starin stores
   const userId = useSelector((store) => store.user);
-  const strains = useSelector((store) => store.strains);
   const likedStrains = useSelector((store) => store.likeReducer);
-  console.log("strains data is:", strains);
   console.log("user data is:", userId);
   console.log("liked strains is:", likedStrains);
 
-  //setting use history to go to strain edit when the img is clicked
-  const strainEditRoute = () => {
-    history.push("/edit");
+  // setting use history to go to strain edit when the img is clicked
+  const strainEditRoute = (fav_id) => {
+    history.push(`/edit/${fav_id}`);
   };
-  //handle click for the image routing to edit STILL NEEDS TO BE DONE 
-  const handleImgClick = () => {
-    strainEditRoute();
+  
+  // handle click for the image routing to edit STILL NEEDS TO BE DONE 
+  const handleImgClick = (strain) => {
+    dispatch({
+      type: "SET_NOTES",
+      payload: strain
+    })
+    strainEditRoute(strain.fav_id);
   };
 
-  //grabbing the single id so that the delete can have the id it needs
-  /*const strain = likedStrains.find( strain =>
-    strain.id == params.id
-    )*/
- 
-
-  //dispatch to the delete reducer
+  // dispatch to the delete reducer
   const handleStrainIdDelete = (id) => {
     console.log("id is:", id);
     dispatch({
@@ -47,34 +46,64 @@ function StrainFavorites() {
     });
   };
 
-//dispatching an action to fecth strains to grab my data 
-useEffect(() => {
+  // dispatching an action to fetch strains to grab my data
+  useEffect(() => {
     dispatch({ type: "FETCH_FAVORITE_STRAINS" });
   }, []);
 
- /* const handleStrainImgDelete = (imageId) => {
-    console.log('img is :', imageId);
-       dispatch({
-        type: "DELETE_STRAINS_IMG",
-        payload: imageId
-       })
-  }*/
-
-  //render
+  // render
   return (
-    <>
     <div>
       {likedStrains.map((strain) => (
-        <div key={strain.id}>
-          <h1>{strain.strain_name}</h1>
-          <button onClick={() => handleStrainIdDelete(strain.id, strain.image)}>❌</button>
-          <img src={strain.image} onClick={handleImgClick} />
-        </div>
+        <Box
+          key={strain.id}
+          sx={{
+            backgroundColor: 'black',
+            p: '4px',
+            borderRadius: '4px',
+            boxShadow: '0 0 2px black',
+            margin: 1,
+            display: 'inline-block'
+          }}
+        >
+          <Card sx={{ maxWidth: 345, height: 450 }}>
+            <CardMedia
+              sx={{ height: '70%', objectFit: 'contain' }}
+              image={strain.image}
+              alt={strain.strain_name}
+              onClick={() => handleImgClick(strain)}
+              title={strain.strain_name}
+            />
+            <CardContent>
+              {/* Set a fixed height for the title area */}
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="div"
+                sx={{
+                  marginBottom: '8px',
+                  maxHeight: '40px', // Adjust the value as needed
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {strain.strain_name}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              {/* Use the Chip component */}
+              <Chip
+                label="Delete❌"
+                onClick={() => handleStrainIdDelete(strain.id, strain.image)}
+                clickable
+              />
+            </CardActions>
+          </Card>
+        </Box>
       ))}
     </div>
-  </>
-);
+  );
 }
 
-//export component
+// export component
 export default StrainFavorites;

@@ -8,7 +8,6 @@ function* euphoriaSaga() {
     yield takeLatest("DELETE_STRAINS_ID", deleteStrainsId)
     yield takeLatest("LIKE_STRAINS", likeStrains)
     yield takeLatest("FETCH_FAVORITE_STRAINS", fetchFavoriteStrains)
-   // yield takeLatest("DELETE_STRAINS_IMG", deleteStrainsImg )
 }
 
 //fetch strains GET gen function
@@ -35,15 +34,15 @@ function* fetchFavoriteStrains(action) {
      }
  }
 
-//add notes POST gen function 
+//add notes PUT gen function 
 function* addNotes(action) {
-    console.log('add notes was dispatched with:', action);
+    console.log('add notes was dispatched with:', action.payload);
     try{
-        yield axios.post('/Euphoria', {
-            note: action.payload
+        yield axios.put(`/Euphoria/${action.payload.id}`, {
+            note: action.payload.notes
         })
         //refreshing data with fetch/get
-        yield put({ type: 'FETCH_STRAINS'})
+        yield put({ type: "FETCH_FAVORITE_STRAINS"})
     } catch(err){
         console.log('error posting notes on redux side', err);
     }
@@ -60,18 +59,6 @@ function* deleteStrainsId(action){
         console.log('error deleting strains id on redux side', err);
     }
 }
-
-//Delete strains delete img gen function
-/*function* deleteStrainsImg(action){
-    console.log('delete strain was dispatched with:', action);
-    try{
-        yield axios.delete(`/Euphoria/${action.payload}`)
-        //refreshing data with fetch/get
-        yield put({ type: 'FETCH_STRAINS'})
-    } catch(err){
-        console.log('error deleting strains img on redux side', err);
-    }
-}*/
 
 //liking/ updating strains gen function 
 function* likeStrains(action){

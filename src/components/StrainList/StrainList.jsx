@@ -4,6 +4,7 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import {useSelector} from 'react-redux';
 import { useDispatch } from 'react-redux';
 import StrainItem from '../StrainItem/StrainItem';
+import './List.css'
 
 //strainsList function 
 function StrainList() {
@@ -30,10 +31,14 @@ function StrainList() {
   return (
     <>
     <div>
-      <h1>Welcome to Euphoria, {user.username}!</h1>
+    <h1 className='welcome-header'></h1>
       <section>
         {strains.map((strain) => {
-          return <StrainItem key={strain.id} strain={strain}/>
+          return (
+            <>
+          <StrainItem key={strain.id} strain={strain}/>
+          </>
+          )
         })}
       </section>
       <LogOutButton className="btn" />

@@ -32,7 +32,7 @@ GROUP BY "strain"."strain_name", "strain"."image", "strain"."description","strai
 });
 
 //get route for user id 
-router.get('/favorites', (req, res) => {
+router.get('/favorites', rejectUnauthenticated, (req, res) => {
   // GET route code 
   console.log('inside of /favorites GET router side');
   let userId = req.user.id
@@ -42,13 +42,15 @@ router.get('/favorites', (req, res) => {
   "strain"."strain_name",
   "strain"."image",
   "strain"."description",
+  "favorites"."id" AS fav_id,
+  "favorites"."notes",
   STRING_AGG(CASE WHEN "feelings"."type" = 'positive' THEN "feelings"."feelings" END, ', ') AS "positive_feelings",
   STRING_AGG(CASE WHEN "feelings"."type" = 'negative' THEN "feelings"."feelings" END, ', ') AS "negative_feelings"
 FROM "strain"
 JOIN "strain_feelings" ON "strain"."id" = "strain_feelings"."strain_id"
 JOIN "feelings" ON "strain_feelings"."feelings_id" = "feelings"."id"
 JOIN "favorites" ON "strain"."id" = "favorites"."strain_id" WHERE "favorites"."user_id" = $1
-GROUP BY "strain"."strain_name", "strain"."image", "strain"."description", "strain"."id";`
+GROUP BY "strain"."strain_name", "strain"."image", "strain"."description", "strain"."id", "favorites"."id";`
   //bringing in the pool 
   pool.query(queryText, [userId])
     .then((result) => {
@@ -62,30 +64,22 @@ GROUP BY "strain"."strain_name", "strain"."image", "strain"."description", "stra
 });
 
 //Put Route 
-router.put('/:id',rejectUnauthenticated, (req, res) => {
-  // POST route code here
-  console.log('inside of Euphoria post for notes', req.body);
-  let userId = req.user.id
-  let description_notes = req.body.description_notes
-  let feelings_notes = req.body.feelings_notes
-  //todo strain id imput 
-
-  //query notes for data fields and sql injection 
-  const queryText = `INSERT INTO "notes" (description_notes, feelings_notes, userId)
-  VALUES ($1, $2, $3)`
-  //redeclaring our data fields 
-  const queryParams = [description_notes, feelings_notes, userId]
-  //bringing in the pool 
-  pool.query(queryText, queryParams)
+router.put('/:id', rejectUnauthenticated, (req, res) => {
+  const idToUpdate = req.params.id;
+  console.log('req.body is:',req.body );
+  console.log('params.id is :', req.params.id);
+  const sqlText = `UPDATE favorites SET notes = $1 WHERE id = $2;`
+  pool.query(sqlText, [req.body.note, idToUpdate])
     .then((result) => {
-      console.log('post request sent result is', req.body);
-      //send ok status 
-      res.sendStatus(201)
-    }).catch((err) => {
-      console.log(`Error making query ${queryText}`, err);
-      res.sendStatus(500)
+      console.log('result is:', result);
+      res.sendStatus(200);
     })
+    .catch((error) => {
+      console.log(`Error making database query ${sqlText}`, error);
+      res.sendStatus(500);
+    });
 });
+
 
 //Delete Route
 router.delete('/:id', rejectUnauthenticated, (req, res) => {

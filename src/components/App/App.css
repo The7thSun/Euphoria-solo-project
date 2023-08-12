@@ -32,8 +32,8 @@ Button
   border-color: #014041;
   border-width: 1px 1px 3px;
   border-radius: 4px;
-  background-color: #00acb0;
-  color: #f8f8f8;
+  background-color: khaki;
+  color: black;
   font-size: 1.1rem;
   outline: 0;
   cursor: pointer;
@@ -55,7 +55,7 @@ Button
 }
 
 .btn:hover {
-  background-color: #008183;
+  background-color: darksalmon;
   text-decoration: none;
 }
 
@@ -109,4 +109,24 @@ Form Treatment
 input {
   margin: 5px;
   margin-bottom: 10px;
+}
+
+/* styles.css */
+body {
+  /* Set background image using URL */
+  background-image: url('https://img.freepik.com/free-vector/realistic-cannabis-leaf-background-design_23-2148770967.jpg');
+
+  /* Set background image to cover the entire viewport */
+  background-size: cover;
+
+  /* Center the background image vertically and horizontally */
+  background-position: center center;
+
+  /* Fix the background image in place */
+  background-attachment: fixed;
+
+  /* Add some default styles to the body */
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }

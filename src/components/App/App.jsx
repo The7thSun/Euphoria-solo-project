@@ -73,7 +73,7 @@ function App() {
            {/* Edit page */}
            <Route 
          //brings you to edit page 
-        path='/edit'>
+        path='/edit/:id'>
           <StrainEdit />
         </Route>
            
