@@ -1,6 +1,7 @@
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from 'react';
+// MUI imports 
 import Chip from '@mui/material/Chip';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
